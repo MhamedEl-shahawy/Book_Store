@@ -24,6 +24,7 @@
    position:relative;
 }
 .side{
+  position:fixed;
    width:20%;
    background:#f00;
    height:100%;
