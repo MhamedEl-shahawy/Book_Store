@@ -1,9 +1,11 @@
 <template>
   <main class="home">
    <div class="container" >
+   <Browse/>
+   <div class="grid">
      <div  class="book-card"  v-for="book in books" :key="book">
          <div   class="book-card__cover">
-             <img :src="book.volumeInfo.imageLinks['thumbnail']" class="book-card__img" />           
+            <router-link :to="'book/'+book.id"> <img :src="book.volumeInfo.imageLinks['thumbnail']" class="book-card__img" /></router-link>           
           </div>
          <div>
              <div class="book-card__title">
@@ -16,15 +18,21 @@
          </div>
      </div>
    </div>
+   </div>
+
 
   </main>
 </template>
 
 <script>
 // @ is an alias to /src
+import Browse from "@/components/Browse.vue";
 
 export default {
   name: 'home',
+  components:{
+      Browse
+  },
   data(){
      return{
       books:null,
@@ -39,7 +47,7 @@ export default {
   methods:{
    fetchProducts(){     
    {     
-              this.$http.get("https://www.googleapis.com/books/v1/volumes?q=programmer&fbclid=IwAR04LtnrUf2UFErs-AzMqlPf5iVF__TONFp-NYcK4bWgkf-v3uk9eLr7Ouc").then((response) => {
+              this.$http.get("https://www.googleapis.com/books/v1/volumes?q=art&fbclid=IwAR04LtnrUf2UFErs-AzMqlPf5iVF__TONFp-NYcK4bWgkf-v3uk9eLr7Ouc").then((response) => {
               this.books =response.data.items;
             });   
           }
@@ -48,21 +56,25 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .home{
-  width:70%;
+  width:82%;
   height:100%;
-  padding:1em;
   overflow:hidden;
-  
+  margin-left:18%;
+  background-color:#fff;
 }
 .container {
-	width:100%;
-	height:100%;
-	display:grid;
-	grid-template-columns:repeat(5,1fr);
-    grid-gap:10px;
-    color:#2A2A2A;
+  width:100%;
+  height:100%;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  grid-gap:10px;
+  color:#2A2A2A;
+  padding:1em;
+  
 }
 .book-card{
 	height:400px;
